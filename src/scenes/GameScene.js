@@ -5,8 +5,6 @@ let keyW;
 let keyA;
 let keyS;
 let keyD;
-let canJump = true;
-let lastJump;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
