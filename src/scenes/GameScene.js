@@ -20,7 +20,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('tinyPlatform','src/GameScene/tinyground.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
              { frameWidth: 317.4, frameHeight: 254 });
-        this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png')
+        this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
     }
 
     create() {
@@ -67,7 +67,19 @@ class GameScene extends Phaser.Scene {
          slime.body.setGravityY(300)
          this.physics.add.collider(slime, platforms);
 
-         
+         hearts = this.physics.add.group({
+            key: 'heart',
+            repeat: 2,
+            setXY: { x: 12, y: 0, stepX: 1000 }
+        });
+    
+        hearts.children.iterate(function (child) {
+    
+            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    
+        });
+        this.physics.add.collider(hearts, platforms);
+        this.physics.add.overlap(player, hearts, collectStar, null, this);
     }
 
     update(delta, time) {
