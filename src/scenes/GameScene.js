@@ -66,6 +66,8 @@ class GameScene extends Phaser.Scene {
          slime.setBounce(0.3);
          slime.body.setGravityY(300)
          this.physics.add.collider(slime, platforms);
+
+         
     }
 
     update(delta, time) {
