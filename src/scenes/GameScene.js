@@ -22,6 +22,7 @@ class GameScene extends Phaser.Scene {
 
     preload() {
         this.load.image('bg','/src/GameScene/scene1.png');
+        this.load.image('scene2','src/GameScene/Scene2.png');
         this.load.image('platform','src/GameScene/GrassFloor1.png');
         this.load.image('smallPlatform','src/GameScene/grassfloor.png');
         this.load.image('tinyPlatform','src/GameScene/tinyground.png');
@@ -29,12 +30,14 @@ class GameScene extends Phaser.Scene {
              { frameWidth: 317.4, frameHeight: 254 });
         this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
         this.load.image('star','src/GameScene/kindpng_3039539.png');
+        this.load.tilemapTiledJSON('map','src/scenes/Map.json');
     }
 
     create() {
-
+        this.physics.world.setBounds(0, 0, 1920, 240);
         //bg
         background = this.add.image(960,540,'bg');
+        //background = this.add.tileSprite(0, 0, 1920,1080, 'bg').setOrigin(0, 0).setDepth(1);
 
         //platform
         platforms = this.physics.add.staticGroup();
@@ -110,10 +113,19 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(slime, stars, this.collectStar);
 
         atkDisplay = this.add.text(16, 100, 'atk: 10%', { fontSize: '60px', fill: '#000' });
+        //camera
+        this.cameras.main.setBounds(0, 0, 1920*2, 1080);
+        this.physics.world.setBounds(0, 0, 1920, 1080 );
+        this.cameras.main.startFollow(slime, true, 0.5, 0.5);
+        this.cameras.main.followOffset.set(-300, 0);
+
+        //this.cameras.main.setZoom(2);
 
     }
 
     update(delta, time) {
+        //background.tilePositionX += 2;
+
         if (keyA.isDown) {
             slime.setVelocityX(-250)
             slime.anims.play('slimeLeft', true); // waiting for spritesheet
