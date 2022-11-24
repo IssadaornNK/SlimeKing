@@ -62,7 +62,7 @@ class GameScene extends Phaser.Scene {
          //settings
          slime.setCollideWorldBounds(true);
          slime.setBounce(0.3);
-        //  this.physics.add.collider(this.slime, platforms);
+        this.physics.add.collider(slime, platforms);
     }
 
     update(delta, time) {
