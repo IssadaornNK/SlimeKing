@@ -21,6 +21,7 @@ class GameScene extends Phaser.Scene {
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
         platforms.create(1100,900,'smallPlatform');
+        platforms.create(550,780,'smallPlatform').setScale(0.6);
 
     }
 
