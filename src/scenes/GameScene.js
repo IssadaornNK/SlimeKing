@@ -30,7 +30,7 @@ class GameScene extends Phaser.Scene {
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
         platforms.create(1100,900,'smallPlatform');
-        platforms.create(550,780,'smallPlatform').setScale(0.6);
+        platforms.create(400,720,'smallPlatform');
 
         //slime
         slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5);
@@ -62,7 +62,8 @@ class GameScene extends Phaser.Scene {
          //settings
          slime.setCollideWorldBounds(true);
          slime.setBounce(0.3);
-        this.physics.add.collider(slime, platforms);
+         slime.body.setGravityY(300)
+         this.physics.add.collider(slime, platforms);
     }
 
     update(delta, time) {
@@ -79,7 +80,7 @@ class GameScene extends Phaser.Scene {
             slime.anims.play('slimeRight', false); // waiting for spritesheet
         }
         if(keyW.isDown) {
-            slime.setVelocityY(-300);
+            slime.setVelocityY(-400);
             slime.anims.play('slimeleft', true);
         }
     }
