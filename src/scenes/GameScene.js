@@ -12,6 +12,7 @@ class GameScene extends Phaser.Scene {
     preload() {
         this.load.image('bg','/src/GameScene/scene1.png');
         this.load.image('platform','src/GameScene/GrassFloor1.png');
+        this.load.image('smallPlatform','src/GameScene/grassfloor.png');
 
     }
 
@@ -19,7 +20,7 @@ class GameScene extends Phaser.Scene {
         background = this.add.image(800,500,'bg');
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
-        platforms.create(1600,920,'platform');
+        platforms.create(1300,880,'smallPlatform');
 
     }
 
