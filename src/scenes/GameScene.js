@@ -17,7 +17,9 @@ class GameScene extends Phaser.Scene {
         this.load.image('bg','/src/GameScene/scene1.png');
         this.load.image('platform','src/GameScene/GrassFloor1.png');
         this.load.image('smallPlatform','src/GameScene/grassfloor.png');
+        this.load.image('tinyPlatform','src/GameScene/tinyground.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
+
              { frameWidth: 317.4, frameHeight: 254 });
     }
 
@@ -30,7 +32,7 @@ class GameScene extends Phaser.Scene {
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
         platforms.create(1100,900,'smallPlatform');
-        platforms.create(400,720,'smallPlatform');
+        platforms.create(400,720,'tinyPlatform');
 
         //slime
         slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5);
