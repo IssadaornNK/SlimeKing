@@ -14,7 +14,7 @@ let stars;
 let atk =10;
 let atkDisplay;
 let monster;
-let tween;
+let mon;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -34,18 +34,15 @@ class GameScene extends Phaser.Scene {
         this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
         this.load.image('star','src/GameScene/kindpng_3039539.png');
         this.load.image('map','src/GameScene/map.png')
+        this.load.spritesheet('mon', 'src/GameScene/Female 16-2.png',
+             { frameWidth: 32 , frameHeight: 32 });
     }
 
     create() {
         //========bg=======
         background = this.add.image(5760,540,'map');
         //background = this.add.image(1920+960,540,'scene2');
-        tween = this.tweens.addCounter({
-            from: 1,
-            to: 2,
-            duration: 5000,
-            repeat: -1
-        });
+        
         
         //========platform=======
         platforms = this.physics.add.staticGroup();
@@ -133,7 +130,7 @@ class GameScene extends Phaser.Scene {
         //this.cameras.main.setZoom(2);
 
         //========Monster========
-        monster = this.physics.add.group();
+       
 
         //======== ========
     }
