@@ -6,6 +6,7 @@ let keyW;
 let keyA;
 let keyS;
 let keyD;
+let hearts;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -66,20 +67,20 @@ class GameScene extends Phaser.Scene {
          slime.setBounce(0.3);
          slime.body.setGravityY(300)
          this.physics.add.collider(slime, platforms);
-
+         
          hearts = this.physics.add.group({
             key: 'heart',
             repeat: 2,
-            setXY: { x: 12, y: 0, stepX: 1000 }
+            setXY: { x: 300, y: 250, stepX: 1000 }
         });
-    
+
         hearts.children.iterate(function (child) {
     
-            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+            child.setBounceY(Phaser.Math.FloatBetween(0.2, 0.4));
     
         });
         this.physics.add.collider(hearts, platforms);
-        this.physics.add.overlap(player, hearts, collectStar, null, this);
+        //this.physics.add.overlap(slime, hearts, collectStar, null, this);
     }
 
     update(delta, time) {
