@@ -38,7 +38,7 @@ class GameScene extends Phaser.Scene {
 
     create() {
         //========bg=======
-        background = this.add.image(960,540,'map');
+        background = this.add.image(5760,540,'map');
         //background = this.add.image(1920+960,540,'scene2');
         tween = this.tweens.addCounter({
             from: 1,
@@ -50,7 +50,7 @@ class GameScene extends Phaser.Scene {
         //========platform=======
         platforms = this.physics.add.staticGroup();
         platforms.enableBody = true
-        platforms.create(960, 1020, 'ground').setScale(1.1).refreshBody();
+        platforms.create(5760, 1020, 'ground').setScale(1.1).refreshBody();
         platforms.create(1100,920,'smallPlatform');
         platforms.create(2050,920,'smallPlatform');
         platforms.create(480,720,'tinyPlatform');
@@ -93,8 +93,8 @@ class GameScene extends Phaser.Scene {
          //========heart========
          hearts = this.physics.add.group({
             key: 'heart',
-            repeat: 2,
-            setXY: { x: 450, y: 250, stepX: 1000 }
+            repeat: 7,
+            setXY: { x: 2500, y: 0, stepX: 4000 }
         });
 
         hearts.children.iterate(function (child) {
@@ -110,10 +110,9 @@ class GameScene extends Phaser.Scene {
         //========star========
         stars = this.physics.add.group({
             key: 'star',
-            repeat: 3,
-            setXY: { x: 300, y: 250, stepX: 950 }
+            repeat: 25,
+            setXY: { x: 300, y: 0, stepX: 550 }
         });
-
 
         stars.children.iterate(function (child) {
     
@@ -173,7 +172,7 @@ class GameScene extends Phaser.Scene {
     collectStar(slime,star)
     {
         star.disableBody(true, true);
-        atk +=10;
+        atk +=5;
         atkDisplay.setText('atk: '+atk+'%');
     }
 }
