@@ -7,7 +7,8 @@ let keyA;
 let keyS;
 let keyD;
 let hearts;
-let heartScore =0;
+let heartScore =3;
+let heartDisplay;
 let cursors;
 class GameScene extends Phaser.Scene {
     constructor(test) {
@@ -29,13 +30,13 @@ class GameScene extends Phaser.Scene {
     create() {
 
         //bg
-        background = this.add.image(800,500,'bg');
+        background = this.add.image(960,540,'bg');
 
         //platform
         platforms = this.physics.add.staticGroup();
-        platforms.create(800, 980, 'platform').refreshBody();
-        platforms.create(1100,900,'smallPlatform');
-        platforms.create(450,720,'tinyPlatform');
+        platforms.create(960, 1020, 'platform').refreshBody();
+        platforms.create(1100,920,'smallPlatform');
+        platforms.create(480,720,'tinyPlatform');
 
         //slime
         slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5);
@@ -85,6 +86,8 @@ class GameScene extends Phaser.Scene {
         });
         this.physics.add.collider(hearts, platforms);
         this.physics.add.overlap(slime, hearts, this.collectHeart);
+
+        heartDisplay = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     }
 
     update(delta, time) {
@@ -101,7 +104,7 @@ class GameScene extends Phaser.Scene {
             slime.anims.play('slimeRight', false); // waiting for spritesheet
         }
         if(keyW.isDown&&slime.body.touching.down) {
-            slime.setVelocityY(-480);
+            slime.setVelocityY(-500);
             slime.anims.play('slimeleft', true);
         }
     }
