@@ -19,8 +19,8 @@ class GameScene extends Phaser.Scene {
         this.load.image('smallPlatform','src/GameScene/grassfloor.png');
         this.load.image('tinyPlatform','src/GameScene/tinyground.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
-
              { frameWidth: 317.4, frameHeight: 254 });
+        this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png')
     }
 
     create() {
@@ -32,7 +32,7 @@ class GameScene extends Phaser.Scene {
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
         platforms.create(1100,900,'smallPlatform');
-        platforms.create(400,720,'tinyPlatform');
+        platforms.create(480,720,'tinyPlatform');
 
         //slime
         slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5);
@@ -81,8 +81,8 @@ class GameScene extends Phaser.Scene {
             slime.anims.play('slimeLeft', false);
             slime.anims.play('slimeRight', false); // waiting for spritesheet
         }
-        if(keyW.isDown) {
-            slime.setVelocityY(-400);
+        if(keyW.isDown&&slime.body.touching.down) {
+            slime.setVelocityY(-480);
             slime.anims.play('slimeleft', true);
         }
     }
