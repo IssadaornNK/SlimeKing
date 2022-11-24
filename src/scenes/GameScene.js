@@ -13,6 +13,8 @@ let cursors;
 let stars;
 let atk =10;
 let atkDisplay;
+let monster;
+let tween;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -24,28 +26,37 @@ class GameScene extends Phaser.Scene {
         this.load.image('bg','/src/GameScene/scene1.png');
         this.load.image('scene2','src/GameScene/Scene2.png');
         this.load.image('platform','src/GameScene/GrassFloor1.png');
+        this.load.image('ground','src/GameScene/ground.png')
         this.load.image('smallPlatform','src/GameScene/grassfloor.png');
         this.load.image('tinyPlatform','src/GameScene/tinyground.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
              { frameWidth: 317.4, frameHeight: 254 });
         this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
         this.load.image('star','src/GameScene/kindpng_3039539.png');
-        this.load.tilemapTiledJSON('map','src/scenes/Map.json');
+        this.load.image('map','src/GameScene/map.png')
     }
 
     create() {
-        this.physics.world.setBounds(0, 0, 1920, 240);
-        //bg
-        background = this.add.image(960,540,'bg');
-        //background = this.add.tileSprite(0, 0, 1920,1080, 'bg').setOrigin(0, 0).setDepth(1);
-
-        //platform
+        //========bg=======
+        background = this.add.image(960,540,'map');
+        //background = this.add.image(1920+960,540,'scene2');
+        tween = this.tweens.addCounter({
+            from: 1,
+            to: 2,
+            duration: 5000,
+            repeat: -1
+        });
+        
+        //========platform=======
         platforms = this.physics.add.staticGroup();
-        platforms.create(960, 1020, 'platform').refreshBody();
+        platforms.enableBody = true
+        platforms.create(960, 1020, 'ground').setScale(1.1).refreshBody();
         platforms.create(1100,920,'smallPlatform');
+        platforms.create(2050,920,'smallPlatform');
         platforms.create(480,720,'tinyPlatform');
+        
 
-        //slime
+        //========slime========
         slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5);
         this.physics.add.collider(slime);
         this.anims.create({
@@ -67,19 +78,19 @@ class GameScene extends Phaser.Scene {
              repeat: -1
          })
 
-         //input
+         //========input========
          keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
          keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
          keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
 
-         //settings
+         //========settings========
          slime.setCollideWorldBounds(true);
          slime.setBounce(0.3);
          slime.body.setGravityY(300)
          this.physics.add.collider(slime, platforms);
 
          cursors = this.input.keyboard.createCursorKeys();
-         //heart
+         //========heart========
          hearts = this.physics.add.group({
             key: 'heart',
             repeat: 2,
@@ -96,13 +107,14 @@ class GameScene extends Phaser.Scene {
 
         heartDisplay = this.add.text(16, 16, 'hp: 3', { fontSize: '60px', fill: '#000' });
 
+        //========star========
         stars = this.physics.add.group({
             key: 'star',
             repeat: 3,
             setXY: { x: 300, y: 250, stepX: 950 }
         });
 
-        //star
+
         stars.children.iterate(function (child) {
     
             child.setBounceY(Phaser.Math.FloatBetween(0.2, 0.4));
@@ -113,18 +125,24 @@ class GameScene extends Phaser.Scene {
         this.physics.add.overlap(slime, stars, this.collectStar);
 
         atkDisplay = this.add.text(16, 100, 'atk: 10%', { fontSize: '60px', fill: '#000' });
-        //camera
-        this.cameras.main.setBounds(0, 0, 1920*2, 1080);
-        this.physics.world.setBounds(0, 0, 1920, 1080 );
+        //========camera========
+        this.cameras.main.setBounds(0, 0, background.displayWidth,background.displayHeight);
+        this.physics.world.setBounds(0, 0, 1920*6, 1080*6);
         this.cameras.main.startFollow(slime, true, 0.5, 0.5);
-        this.cameras.main.followOffset.set(-300, 0);
+        //this.cameras.main.followOffset.set(-300, 0);
 
         //this.cameras.main.setZoom(2);
 
+        //========Monster========
+        monster = this.physics.add.group();
+
+        //======== ========
     }
 
     update(delta, time) {
         //background.tilePositionX += 2;
+        //platforms.tilePositionX += 2;
+        
 
         if (keyA.isDown) {
             slime.setVelocityX(-250)
@@ -142,6 +160,9 @@ class GameScene extends Phaser.Scene {
             slime.setVelocityY(-510);
             slime.anims.play('slimeleft', true);
         }
+
+        heartDisplay.setScrollFactor(0);
+        atkDisplay.setScrollFactor(0);
     }
     collectHeart (slime, heart)
     {
