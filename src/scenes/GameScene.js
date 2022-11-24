@@ -7,6 +7,8 @@ let keyA;
 let keyS;
 let keyD;
 let hearts;
+let heartScore =0;
+let cursors;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -33,7 +35,7 @@ class GameScene extends Phaser.Scene {
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
         platforms.create(1100,900,'smallPlatform');
-        platforms.create(480,720,'tinyPlatform');
+        platforms.create(450,720,'tinyPlatform');
 
         //slime
         slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5);
@@ -67,6 +69,8 @@ class GameScene extends Phaser.Scene {
          slime.setBounce(0.3);
          slime.body.setGravityY(300)
          this.physics.add.collider(slime, platforms);
+
+         cursors = this.input.keyboard.createCursorKeys();
          
          hearts = this.physics.add.group({
             key: 'heart',
@@ -80,7 +84,7 @@ class GameScene extends Phaser.Scene {
     
         });
         this.physics.add.collider(hearts, platforms);
-        //this.physics.add.overlap(slime, hearts, collectStar, null, this);
+        //this.physics.add.overlap(slime, hearts, collectHeart, null, this);
     }
 
     update(delta, time) {
@@ -100,6 +104,11 @@ class GameScene extends Phaser.Scene {
             slime.setVelocityY(-480);
             slime.anims.play('slimeleft', true);
         }
+    }
+    collectHeart (slime, heart)
+    {
+        heart.disableBody(true, true);
+        heartScore +=10;
     }
 }
 export default GameScene;
