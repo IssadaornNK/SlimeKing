@@ -10,6 +10,9 @@ let hearts;
 let hp =3;
 let heartDisplay;
 let cursors;
+let stars;
+let atk =10;
+let atkDisplay;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -25,6 +28,7 @@ class GameScene extends Phaser.Scene {
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
              { frameWidth: 317.4, frameHeight: 254 });
         this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
+        this.load.image('star','src/GameScene/kindpng_3039539.png');
     }
 
     create() {
@@ -72,11 +76,11 @@ class GameScene extends Phaser.Scene {
          this.physics.add.collider(slime, platforms);
 
          cursors = this.input.keyboard.createCursorKeys();
-         
+         //heart
          hearts = this.physics.add.group({
             key: 'heart',
             repeat: 2,
-            setXY: { x: 300, y: 250, stepX: 1000 }
+            setXY: { x: 450, y: 250, stepX: 1000 }
         });
 
         hearts.children.iterate(function (child) {
@@ -87,7 +91,26 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(hearts, platforms);
         this.physics.add.overlap(slime, hearts, this.collectHeart);
 
-        heartDisplay = this.add.text(16, 16, 'hp: 3', { fontSize: '32px', fill: '#000' });
+        heartDisplay = this.add.text(16, 16, 'hp: 3', { fontSize: '60px', fill: '#000' });
+
+        stars = this.physics.add.group({
+            key: 'star',
+            repeat: 3,
+            setXY: { x: 300, y: 250, stepX: 950 }
+        });
+
+        //star
+        stars.children.iterate(function (child) {
+    
+            child.setBounceY(Phaser.Math.FloatBetween(0.2, 0.4));
+    
+        });
+
+        this.physics.add.collider(stars, platforms);
+        this.physics.add.overlap(slime, stars, this.collectStar);
+
+        atkDisplay = this.add.text(16, 100, 'atk: 10%', { fontSize: '60px', fill: '#000' });
+
     }
 
     update(delta, time) {
@@ -113,6 +136,12 @@ class GameScene extends Phaser.Scene {
         heart.disableBody(true, true);
         hp +=1;
         heartDisplay.setText('hp: ' + hp);
+    }
+    collectStar(slime,star)
+    {
+        star.disableBody(true, true);
+        atk +=10;
+        atkDisplay.setText('atk: '+atk+'%');
     }
 }
 export default GameScene;
