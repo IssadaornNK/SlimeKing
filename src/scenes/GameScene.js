@@ -7,7 +7,7 @@ let keyA;
 let keyS;
 let keyD;
 let hearts;
-let heartScore =3;
+let hp =3;
 let heartDisplay;
 let cursors;
 class GameScene extends Phaser.Scene {
@@ -87,7 +87,7 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(hearts, platforms);
         this.physics.add.overlap(slime, hearts, this.collectHeart);
 
-        heartDisplay = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        heartDisplay = this.add.text(16, 16, 'hp: 3', { fontSize: '32px', fill: '#000' });
     }
 
     update(delta, time) {
@@ -104,14 +104,15 @@ class GameScene extends Phaser.Scene {
             slime.anims.play('slimeRight', false); // waiting for spritesheet
         }
         if(keyW.isDown&&slime.body.touching.down) {
-            slime.setVelocityY(-500);
+            slime.setVelocityY(-510);
             slime.anims.play('slimeleft', true);
         }
     }
     collectHeart (slime, heart)
     {
         heart.disableBody(true, true);
-        heartScore +=10;
+        hp +=1;
+        heartDisplay.setText('hp: ' + hp);
     }
 }
 export default GameScene;
