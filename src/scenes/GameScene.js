@@ -22,15 +22,19 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
+
+        //bg
         background = this.add.image(800,500,'bg');
+
+        //platform
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
         platforms.create(1100,900,'smallPlatform');
         platforms.create(550,780,'smallPlatform').setScale(0.6);
 
-        this.physics.add.collider(slime, platforms);
-        slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5)
-
+        //slime
+        slime = this.physics.add.sprite(350, 860, 'slime').setScale(0.5);
+        this.physics.add.collider(slime);
         this.anims.create({
             key: 'slimeLeft',
             frames: this.anims.generateFrameNumbers('slime', {
@@ -40,7 +44,6 @@ class GameScene extends Phaser.Scene {
             duration: 1000,
             repeat: -1
         })
-
         this.anims.create({
             key: 'slimeRight',
              frames: this.anims.generateFrameNumbers('slime', {
@@ -50,15 +53,35 @@ class GameScene extends Phaser.Scene {
              duration: 1000,
              repeat: -1
          })
-         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
-         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-         // keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
-         slime.setCollideWorldBounds(true)
-        
+
+         //input
+         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
+
+         //settings
+         slime.setCollideWorldBounds(true);
+         slime.setBounce(0.3);
+        //  this.physics.add.collider(this.slime, platforms);
     }
 
     update(delta, time) {
-        
+        if (keyA.isDown) {
+            slime.setVelocityX(-250)
+            slime.anims.play('slimeLeft', true); // waiting for spritesheet
+        } else if (keyD.isDown) {
+            slime.setVelocityX(250)
+            slime.anims.play('slimeRight', true); // waiting for spritesheet
+        } else {
+            slime.setVelocityX(0)
+            // slime.anims.play('slimeAni', false);
+            slime.anims.play('slimeLeft', false);
+            slime.anims.play('slimeRight', false); // waiting for spritesheet
+        }
+        if(keyW.isDown) {
+            slime.setVelocityY(-300);
+            slime.anims.play('slimeleft', true);
+        }
     }
 }
 export default GameScene;
