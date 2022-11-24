@@ -20,7 +20,7 @@ class GameScene extends Phaser.Scene {
         background = this.add.image(800,500,'bg');
         platforms = this.physics.add.staticGroup();
         platforms.create(800, 980, 'platform').refreshBody();
-        platforms.create(1300,880,'smallPlatform');
+        platforms.create(1100,900,'smallPlatform');
 
     }
 
