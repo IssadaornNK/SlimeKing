@@ -84,7 +84,7 @@ class GameScene extends Phaser.Scene {
     
         });
         this.physics.add.collider(hearts, platforms);
-        //this.physics.add.overlap(slime, hearts, collectHeart, null, this);
+        this.physics.add.overlap(slime, hearts, this.collectHeart);
     }
 
     update(delta, time) {
