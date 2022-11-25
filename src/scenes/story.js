@@ -27,7 +27,7 @@ class story extends Phaser.Scene {
         this.load.image('t7','src/GameScene/text7.png');
         this.load.image('t8','src/GameScene/text8.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
-             { frameWidth: 317.4, frameHeight: 254 });
+             { frameWidth: 317, frameHeight: 254 });
         this.load.image('floor','src/GameScene/floor.png')
         this.load.image('star','src/GameScene/kindpng_3039539.png');
     }
