@@ -26,6 +26,7 @@ let bulletGroup1;
 let bulletGroup2;
 let hr;
 let starCount =0;
+let music;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -52,6 +53,7 @@ class GameScene extends Phaser.Scene {
             {frameWidth: 200,frameHeight: 200});
         this.load.spritesheet('mon2', 'src/GameScene/kawaiiGirl.png',
             {frameWidth: 32, frameHeight: 32});
+        this.load.audio('music','src/GameScene/taratata-6264.mp3')
     }
 
     create() {
@@ -59,7 +61,9 @@ class GameScene extends Phaser.Scene {
         background = this.add.image(5760,540,'map');
         //background = this.add.image(1920+960,540,'scene2');
         
-        
+        music = this.sound.add('music', { loop: true })
+        music.play();
+
         //========platform=======
         platforms = this.physics.add.staticGroup();
         platforms.enableBody = true
@@ -324,10 +328,12 @@ class GameScene extends Phaser.Scene {
         //     monster.setVelocityX(20)
         //     monster.anims.play('monRight', true);
         if(hp <=0 ){
+            music.stop();
             this.scene.start("GameOver")
             hp =3;
         }
         if(starCount == 25){
+            music.stop();
             this.scene.start("win");
             hp=3;
             starCount=0;

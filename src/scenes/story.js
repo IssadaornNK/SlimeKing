@@ -8,7 +8,7 @@ let keyW;
 let keyA;
 let keyD;
 let star;
-
+let storySound;
 class story extends Phaser.Scene {
     constructor(test) {
         super({
@@ -30,10 +30,13 @@ class story extends Phaser.Scene {
              { frameWidth: 317, frameHeight: 254 });
         this.load.image('floor','src/GameScene/floor.png')
         this.load.image('star','src/GameScene/kindpng_3039539.png');
+        this.load.audio('storySound','src/GameScene/very-lush-and-swag-loop-74140.mp3')
     }
 
     create() {
         background = this.add.image(960,540,'backg');
+        storySound = this.sound.add('storySound',{loop:true});
+        storySound.play();
         //slime
         slime = this.physics.add.sprite(1400, 800, 'slime').setScale(0.5);
         this.physics.add.collider(slime);
@@ -65,6 +68,7 @@ class story extends Phaser.Scene {
             }
             else{
                 this.scene.start("GameScene");
+                storySound.stop();
             }
         })
         
