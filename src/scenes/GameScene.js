@@ -35,7 +35,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('smallPlatform','src/GameScene/grassfloor.png');
         this.load.image('tinyPlatform','src/GameScene/tinyground.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
-             { frameWidth: 317.4, frameHeight: 254 });
+             { frameWidth: 317, frameHeight: 254 });
         this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
         this.load.image('star','src/GameScene/kindpng_3039539.png');
         this.load.image('map','src/GameScene/map.png')
@@ -78,19 +78,19 @@ class GameScene extends Phaser.Scene {
         this.anims.create({
             key: 'slimeLeft',
             frames: this.anims.generateFrameNumbers('slime', {
-                start: 3,
-                end: 5
+                start: 5,
+                end: 9
             }),
-            duration: 1000,
+            duration: 800,
             repeat: -1
         })
         this.anims.create({
             key: 'slimeRight',
              frames: this.anims.generateFrameNumbers('slime', {
                  start: 0,
-                 end: 2
+                 end: 4
              }),
-             duration: 1000,
+             duration: 800,
              repeat: -1
          })
 
@@ -99,6 +99,7 @@ class GameScene extends Phaser.Scene {
          //================================================================enemy========================================================================
          monster = this.physics.add.sprite(1200,700,'mon').setScale(4);
          this.physics.add.collider(monster);
+         monster.setGravityY(200);
          this.anims.create({
             key: 'monLeft',
             frames : this.anims.generateFrameNumbers('mon',{
@@ -111,15 +112,15 @@ class GameScene extends Phaser.Scene {
          this.anims.create({
             key: 'monRight',
             frames : this.anims.generateFrameNumbers('mon',{
-                start: 6,
-                end: 8
+                start: 0,
+                end: 2
             }),
             duration: 1000,
             repeat: -1
          })
          this.physics.add.collider(monster, platforms);
-         this.physics.add.overlap(monster, slime, this.enemyKiller);
-        //  this.physics.add.collider(monster, slime);
+         this.physics.add.overlap(monster, slime,this.enemyKiller);
+        //  this.physics.add.collider(monster, slime);this.enemyKiller
          //this.physics.add.overlap(monster, slime, this.damage,null,this);
         
 
@@ -196,7 +197,6 @@ class GameScene extends Phaser.Scene {
                 bulletGroup.add(bullet)
                 bulletGroup.setVelocityY(50)
                 bulletGroup.setVelocityX(-1080)
-                
             },
             callbackScope: this,
             loop: true
@@ -210,7 +210,7 @@ class GameScene extends Phaser.Scene {
         //platforms.tilePositionX += 2;
         // this.enemyFollows();
         // this.physics.moveToObject(this.monster, this.slime, 100);
-
+        
         if (keyA.isDown) {
             slime.setVelocityX(-250)
             slime.anims.play('slimeLeft', true); // waiting for spritesheet
@@ -231,10 +231,10 @@ class GameScene extends Phaser.Scene {
         heartDisplay.setScrollFactor(0);
         starDisplay.setScrollFactor(0);
 
-        if (monster.x > slime.x){
-            monster.setVelocityX(-100);
-            monster.anims.play('monLeft', true);
-         } //else if (monster.x < slime.x){
+        // if (monster.x > slime.x){
+        //     monster.setVelocityX(-100);
+        //     monster.anims.play('monLeft', true);
+        // } else if (monster.x < slime.x){
         //     monster.setVelocityX(100);
         //     monster.anims.play('monRight', true);
         //     //monster.anims.play('monLeft', false);
@@ -246,7 +246,7 @@ class GameScene extends Phaser.Scene {
         // }else if (monster.position.x < slime.position.x ){
         //     monster.setVelocityX(20)
         //     monster.anims.play('monRight', true);
-        if(hp==0){
+        if(hp<=0){
             this.scene.start("GameOver")
             hp =3;
         }
@@ -258,8 +258,8 @@ class GameScene extends Phaser.Scene {
 
        {
             this.enemyFollows();
+            monster.anims.play('monLeft', true);
         }
-
     }//endUpdate
 
     collectHeart (slime, heart)
@@ -289,9 +289,10 @@ class GameScene extends Phaser.Scene {
     enemyKiller(monster,slime)
     {
         event.destroy();
+        monster.setVisible(false);
     }
     enemyFollows () {
-        this.physics.moveToObject(monster,slime, 100);
+        this.physics.moveToObject(monster,slime,100);
     }
 }
 export default GameScene;
