@@ -55,6 +55,9 @@ class GameScene extends Phaser.Scene {
         platforms.create(1100,920,'smallPlatform');
         platforms.create(2050,920,'smallPlatform');
         platforms.create(480,720,'tinyPlatform');
+        platforms.create(2500,700,'tinyPlatform');
+        platforms.create(2870,920,'smallPlatform');
+        platforms.create(2900,550,'tinyPlatform');
         
 
         //========slime========
@@ -105,7 +108,7 @@ class GameScene extends Phaser.Scene {
          })
          this.physics.add.collider(monster, platforms);
         //  this.physics.add.collider(monster, slime);
-         this.physics.add.overlap(monster, slime, this.damage);
+         //this.physics.add.overlap(monster, slime, this.damage,null,this);
          
 
 
@@ -170,21 +173,22 @@ class GameScene extends Phaser.Scene {
         //fireButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACEBAR);
         bulletGroup = this.physics.add.group()
         event = this.time.addEvent({
-            delay: 300,
+            delay: 1000,
             callback: function() {
-                bullet = this.physics.add.image(slime.x, slime.y,'bullet')
+                bullet = this.physics.add.image(monster.x, monster.y,'bullet')
                 bullet.setScale(0.7)
                 bullet.setDepth(0.9)
                 bulletGroup.add(bullet)
-                bulletGroup.setVelocityY(-50)
-                bulletGroup.setVelocityX(1080)
+                bulletGroup.setVelocityY(50)
+                bulletGroup.setVelocityX(-1080)
                 
             },
             callbackScope: this,
             loop: true
-        })
-        
-    }
+            })
+            this.physics.add.collider(slime, bulletGroup, this.damage);
+            
+        }
 
     update(delta, time) {
         //background.tilePositionX += 2;
@@ -245,10 +249,11 @@ class GameScene extends Phaser.Scene {
         atk +=5;
         atkDisplay.setText('atk: '+atk+'%');
     }
-    damage(slime)
+    damage(slime,bullet)
     {
         hp -= 1;
         heartDisplay.setText('hp: '+ hp);
+        bullet.destroy();
     }
 }
 export default GameScene;
