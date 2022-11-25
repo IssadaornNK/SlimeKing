@@ -104,7 +104,7 @@ class GameScene extends Phaser.Scene {
             repeat: -1
          })
          this.physics.add.collider(monster, platforms);
-         this.physics.add.collider(monster, slime);
+        //  this.physics.add.collider(monster, slime);
          this.physics.add.overlap(monster, slime, this.damage);
          
 
@@ -205,26 +205,25 @@ class GameScene extends Phaser.Scene {
             slime.anims.play('slimeRight', false); // waiting for spritesheet
         }
         if(keyW.isDown&&slime.body.touching.down) {
-            slime.setVelocityY(-510);
+            slime.setVelocityY(-590);
             slime.anims.play('slimeleft', true);
         }
 
         heartDisplay.setScrollFactor(0);
         atkDisplay.setScrollFactor(0);
 
-        if (monster.x - slime.x > slime.x){
+        if (monster.x > slime.x){
             monster.setVelocityX(-100);
             monster.anims.play('monLeft', true);
-            //monster.anims.play('monRight', false);
-        } else if (monster.x < slime.x){
-            monster.setVelocityX(100);
-            monster.anims.play('monRight', true);
-            //monster.anims.play('monLeft', false);
-        }else {
-            monster.setVelocityX(0);
-            monster.anims.play('monRight', false);
-            monster.anims.play('monLeft', false);
-        }
+         } //else if (monster.x < slime.x){
+        //     monster.setVelocityX(100);
+        //     monster.anims.play('monRight', true);
+        //     //monster.anims.play('monLeft', false);
+        // }else {
+        //     monster.setVelocityX(0);
+        //     monster.anims.play('monRight', false);
+        //     monster.anims.play('monLeft', false);
+        // }
         // }else if (monster.position.x < slime.position.x ){
         //     monster.setVelocityX(20)
         //     monster.anims.play('monRight', true);
@@ -250,7 +249,6 @@ class GameScene extends Phaser.Scene {
     {
         hp -= 1;
         heartDisplay.setText('hp: '+ hp);
-        duration: 1000;
     }
 }
 export default GameScene;
