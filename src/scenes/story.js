@@ -27,7 +27,7 @@ class story extends Phaser.Scene {
         this.load.image('t7','src/GameScene/text7.png');
         this.load.image('t8','src/GameScene/text8.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
-             { frameWidth: 317.4, frameHeight: 254 });
+             { frameWidth: 317, frameHeight: 254 });
         this.load.image('floor','src/GameScene/floor.png')
         this.load.image('star','src/GameScene/kindpng_3039539.png');
     }
@@ -40,8 +40,8 @@ class story extends Phaser.Scene {
         this.anims.create({
             key: 'slimeLeft',
             frames: this.anims.generateFrameNumbers('slime', {
-                start: 3,
-                end: 5
+                start: 5,
+                end: 9
             }),
             duration: 1000,
             repeat: -1
@@ -50,12 +50,11 @@ class story extends Phaser.Scene {
             key: 'slimeRight',
              frames: this.anims.generateFrameNumbers('slime', {
                  start: 0,
-                 end: 2
+                 end: 4
              }),
              duration: 1000,
              repeat: -1
          })
-        //
         this.input.on("pointerdown",()=>{
             if(i<=8){
                 next = this.add.image(350,880,'t'+i);
