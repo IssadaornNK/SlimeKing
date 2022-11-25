@@ -159,7 +159,7 @@ class GameScene extends Phaser.Scene {
         stars = this.physics.add.group({
             key: 'star',
             repeat: 25,
-            setXY: { x: 300, y: 0, stepX: 550 }
+            setXY: { x: 300, y: 0, stepX: 450 }
         });
 
         stars.children.iterate(function (child) {
@@ -250,9 +250,10 @@ class GameScene extends Phaser.Scene {
             this.scene.start("GameOver")
             hp =3;
         }
-        if(starCount==3){
-            this.scene.start("win")
+        if(starCount==25){
+            this.scene.start("win");
             hp=3;
+            starCount=0;
         }
 
        {
@@ -260,8 +261,6 @@ class GameScene extends Phaser.Scene {
         }
 
     }//endUpdate
-
-
 
     collectHeart (slime, heart)
     {
@@ -279,7 +278,7 @@ class GameScene extends Phaser.Scene {
     {
         star.disableBody(true, true);
         starCount += 1;
-        starDisplay.setText('Star: '+starCount);
+        starDisplay.setText('Star: '+starCount+'/25');
     }
         // damage(slime,bullet)
         // {
