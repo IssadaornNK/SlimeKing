@@ -280,12 +280,12 @@ class GameScene extends Phaser.Scene {
         starCount += 1;
         starDisplay.setText('Star: '+starCount+'/25');
     }
-        // damage(slime,bullet)
-        // {
-        //     hp -= 1;
-        //     heartDisplay.setText('hp: '+ hp);
-        //     bullet.destroy();
-        // }
+        damage(slime,bullet)
+        {
+            hp -= 1;
+            heartDisplay.setText('hp: '+ hp);
+            bullet.destroy();
+        }
     enemyKiller(monster,slime)
     {
         event.destroy();
