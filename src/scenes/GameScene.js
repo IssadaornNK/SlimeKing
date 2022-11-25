@@ -12,13 +12,14 @@ let heartDisplay;
 let cursors;
 let stars;
 let atk =10;
-//let atkDisplay;
+let starDisplay;
 let monster;
 let mon;
 let bullet;
 let event;
 let bulletGroup;
 let hr;
+let starCount =0;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -123,7 +124,7 @@ class GameScene extends Phaser.Scene {
         
 
 
-         //========input========
+         //================================================================input================================================================
          keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
          keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
          keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -135,7 +136,7 @@ class GameScene extends Phaser.Scene {
          this.physics.add.collider(slime, platforms);
 
          cursors = this.input.keyboard.createCursorKeys();
-         //========heart========
+         //================================================================heart================================================================
          hearts = this.physics.add.group({
             key: 'heart',
             repeat: 20,
@@ -170,7 +171,7 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(stars, platforms);
         this.physics.add.overlap(slime, stars, this.collectStar);
 
-        //atkDisplay = this.add.text(16, 100, 'atk: 10%', { fontSize: '60px', fill: '#000' });
+        starDisplay = this.add.text(16, 100, 'Star: 0/25', { fontSize: '60px', fill: '#000' });
 
         //========camera========
         this.cameras.main.setBounds(0, 0, background.displayWidth,background.displayHeight);
@@ -228,7 +229,7 @@ class GameScene extends Phaser.Scene {
         }
 
         heartDisplay.setScrollFactor(0);
-        //atkDisplay.setScrollFactor(0);
+        starDisplay.setScrollFactor(0);
 
         if (monster.x > slime.x){
             monster.setVelocityX(-100);
@@ -248,6 +249,10 @@ class GameScene extends Phaser.Scene {
         if(hp==0){
             this.scene.start("GameOver")
             hp =3;
+        }
+        if(starCount==3){
+            this.scene.start("win")
+            hp=3;
         }
 
        {
@@ -273,15 +278,15 @@ class GameScene extends Phaser.Scene {
     collectStar(slime,star)
     {
         star.disableBody(true, true);
-        hp += 0.5;
-        heartDisplay.setText('hp: '+hp);
+        starCount += 1;
+        starDisplay.setText('Star: '+starCount);
     }
-    damage(slime,bullet)
-    {
-        hp -= 1;
-        heartDisplay.setText('hp: '+ hp);
-        bullet.destroy();
-    }
+        // damage(slime,bullet)
+        // {
+        //     hp -= 1;
+        //     heartDisplay.setText('hp: '+ hp);
+        //     bullet.destroy();
+        // }
     enemyKiller(monster,slime)
     {
         event.destroy();

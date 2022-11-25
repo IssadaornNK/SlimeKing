@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 let background;
 let playButton;
-let theOtherScene;
+
 class GameOver extends Phaser.Scene {
     constructor(test) {
         super({
