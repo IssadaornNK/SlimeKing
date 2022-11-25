@@ -40,8 +40,8 @@ class story extends Phaser.Scene {
         this.anims.create({
             key: 'slimeLeft',
             frames: this.anims.generateFrameNumbers('slime', {
-                start: 3,
-                end: 5
+                start: 5,
+                end: 9
             }),
             duration: 1000,
             repeat: -1
@@ -50,12 +50,11 @@ class story extends Phaser.Scene {
             key: 'slimeRight',
              frames: this.anims.generateFrameNumbers('slime', {
                  start: 0,
-                 end: 2
+                 end: 4
              }),
              duration: 1000,
              repeat: -1
          })
-        //
         this.input.on("pointerdown",()=>{
             if(i<=8){
                 next = this.add.image(350,880,'t'+i);
