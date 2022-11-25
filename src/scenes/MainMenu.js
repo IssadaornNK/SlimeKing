@@ -13,8 +13,6 @@ class MainMenu extends Phaser.Scene {
     preload() {
         this.load.image('startButton','src/GameScene/playButton.png')
         this.load.image('slimelogo','src/GameScene/Slimeking_logo.png')
-        this.load.image('bg','/src/GameScene/scene1.png')
-        this.load.image('scene2','src/GameScene/Scene2.png')
         this.load.image('map','src/GameScene/map.png')
     }
 
