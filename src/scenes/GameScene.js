@@ -247,6 +247,7 @@ class GameScene extends Phaser.Scene {
         //     monster.anims.play('monRight', true);
         if(hp==0){
             this.scene.start("GameOver")
+            hp =3;
         }
 
     }//endUpdate
