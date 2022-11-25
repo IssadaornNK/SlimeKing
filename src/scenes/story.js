@@ -9,6 +9,7 @@ let keyA;
 let keyD;
 let star;
 let storySound;
+let monster;
 class story extends Phaser.Scene {
     constructor(test) {
         super({
@@ -31,6 +32,8 @@ class story extends Phaser.Scene {
         this.load.image('floor','src/GameScene/floor.png')
         this.load.image('star','src/GameScene/kindpng_3039539.png');
         this.load.audio('storySound','src/GameScene/very-lush-and-swag-loop-74140.mp3')
+        this.load.spritesheet('mon', 'src/GameScene/Female.png',
+            { frameWidth: 32 , frameHeight: 32 });
     }
 
     create() {
@@ -62,6 +65,29 @@ class story extends Phaser.Scene {
             if(i<=8){
                 next = this.add.image(350,880,'t'+i);
                 i++;
+                if(i==3){
+                    monster = this.physics.add.sprite(1100,700,'mon').setScale(4);
+                    this.anims.create({
+                        key: 'monLeft',
+                        frames : this.anims.generateFrameNumbers('mon',{
+                            start: 3,
+                            end: 5
+                        }),
+                        duration: 1000,
+                        repeat: -1
+                     })
+                     this.anims.create({
+                        key: 'monRight',
+                        frames : this.anims.generateFrameNumbers('mon',{
+                            start: 0,
+                            end: 2
+                        }),
+                        duration: 1000,
+                        repeat: -1
+                     })
+
+                     this.physics.add.collider(monster, platform);
+                }
                 if(i==6){
                     star = this.add.sprite(1750,970,'star');
                 }
