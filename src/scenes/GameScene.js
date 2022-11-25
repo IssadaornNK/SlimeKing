@@ -245,7 +245,9 @@ class GameScene extends Phaser.Scene {
         // }else if (monster.position.x < slime.position.x ){
         //     monster.setVelocityX(20)
         //     monster.anims.play('monRight', true);
-        
+        if(hp==0){
+            this.scene.start("GameOver")
+        }
 
     }//endUpdate
 

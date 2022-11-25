@@ -2,6 +2,7 @@ import 'phaser';
 import Phaser from 'phaser';
 import GameScene from './scenes/GameScene';
 import MainMenu from './scenes/MainMenu';
+import GameOver from './scenes/GameOver';
 
 const config = {
     // For more settings see <https://github.com/photonstorm/phaser/blob/master/src/boot/Config.js>
@@ -21,6 +22,7 @@ const config = {
     scene: [
         MainMenu,
         GameScene,
+        GameOver,
         
     ],
     
