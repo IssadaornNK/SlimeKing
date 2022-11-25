@@ -57,8 +57,7 @@ module.exports = {
       hash: true
     }),
     new CopyWebpackPlugin([
-            { from: './src/image', to: './src/image'},
-            { from: './src/sound', to: './src/sound'}
+            { from: './src/GameScene', to: './src/GameScene'}
         ])
   ],
   module: {
