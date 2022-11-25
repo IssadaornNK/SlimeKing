@@ -145,7 +145,7 @@ class GameScene extends Phaser.Scene {
             key: 'mon2Left',
             frames : this.anims.generateFrameNumbers('mon2',{
                 start: 0,
-                end: 3
+                end: 2
             }),
             duration: 200,
             repeat: -1
