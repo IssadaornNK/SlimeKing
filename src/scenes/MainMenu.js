@@ -22,7 +22,7 @@ class MainMenu extends Phaser.Scene {
         //this.add.image(950,360,'slimelogo').setScale(2)
         playButton.setInteractive()
         playButton.on("pointerdown",()=>{
-            this.scene.start("GameScene")
+            this.scene.start("story")
         })
     }
 
