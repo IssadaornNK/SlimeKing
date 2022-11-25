@@ -4,6 +4,10 @@ let next;
 let i=1;
 let slime;
 let platform;
+let keyW;
+let keyA;
+let keyD;
+let star;
 
 class story extends Phaser.Scene {
     constructor(test) {
@@ -25,22 +29,13 @@ class story extends Phaser.Scene {
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
              { frameWidth: 317.4, frameHeight: 254 });
         this.load.image('floor','src/GameScene/floor.png')
+        this.load.image('star','src/GameScene/kindpng_3039539.png');
     }
 
     create() {
         background = this.add.image(960,540,'backg');
-        this.input.on("pointerdown",()=>{
-            if(i<=8){
-                next = this.add.image(350,880,'t'+i);
-                i++;
-            }
-            else{
-                this.scene.start("GameScene");
-            }
-        })
-
         //slime
-        slime = this.physics.add.sprite(1500, 800, 'slime').setScale(0.5);
+        slime = this.physics.add.sprite(1400, 800, 'slime').setScale(0.5);
         this.physics.add.collider(slime);
         this.anims.create({
             key: 'slimeLeft',
@@ -60,7 +55,21 @@ class story extends Phaser.Scene {
              duration: 1000,
              repeat: -1
          })
+        //
+        this.input.on("pointerdown",()=>{
+            if(i<=8){
+                next = this.add.image(350,880,'t'+i);
+                i++;
+                if(i==6){
+                    star = this.add.sprite(1750,970,'star');
+                }
+            }
+            else{
+                this.scene.start("GameScene");
+            }
+        })
         
+
 
          //
         platform = this.physics.add.staticGroup();
@@ -70,9 +79,31 @@ class story extends Phaser.Scene {
         slime.setBounce(0.3);
         slime.body.setGravityY(300)
         this.physics.add.collider(slime, platform);
+
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+
     }
 
     update(delta, time) {
+        if (keyA.isDown) {
+            slime.setVelocityX(-250)
+            slime.anims.play('slimeLeft', true); // waiting for spritesheet
+        } else if (keyD.isDown) {
+            slime.setVelocityX(250)
+            slime.anims.play('slimeRight', true); // waiting for spritesheet
+        } else {
+            slime.setVelocityX(0)
+            // slime.anims.play('slimeAni', false);
+            slime.anims.play('slimeLeft', false);
+            slime.anims.play('slimeRight', false); // waiting for spritesheet
+        }
+        if(keyW.isDown&&slime.body.touching.down) {
+            slime.setVelocityY(-550);
+            slime.anims.play('slimeleft', true);
+        }
     }
+
 }
 export default story;
