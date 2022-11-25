@@ -45,7 +45,7 @@ class story extends Phaser.Scene {
 
     create() {
         background = this.add.image(960,540,'backg');
-        storySound = this.sound.add('storySound',{loop:true});
+        storySound = this.sound.add('storySound',{loop:true},{volume: 0.001});
         storySound.play();
         v1 = this.sound.add('v1');
         v2 = this.sound.add('v2');
@@ -109,8 +109,18 @@ class story extends Phaser.Scene {
 
                      this.physics.add.collider(monster, platform);
                 }
+                if(i==4){
+                    v4.play();
+                }
                 if(i==6){
+                    v6.play();
                     star = this.add.sprite(1750,970,'star');
+                }
+                if(i==7){
+                    v7.play();
+                }
+                if(i==8){
+                    v8.play();
                 }
                 i++;
             }

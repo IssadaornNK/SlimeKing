@@ -19,7 +19,7 @@ class MainMenu extends Phaser.Scene {
 
     create() {
         background = this.add.image(960,540,'bg')
-        sound1 = this.sound.add('sound1', { loop: true })
+        sound1 = this.sound.add('sound1', { loop: true }, {volume: 0.5})
         sound1.play();
         playButton = this.add.image(950,420,'startButton').setScale(0.5)
         //this.add.image(950,360,'slimelogo').setScale(2)
