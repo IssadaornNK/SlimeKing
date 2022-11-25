@@ -14,10 +14,16 @@ let stars;
 let atk =10;
 let starDisplay;
 let monster;
+let monster1;
+let monster2;
 let mon;
 let bullet;
 let event;
+let event1;
+let event2;
 let bulletGroup;
+let bulletGroup1;
+let bulletGroup2;
 let hr;
 let starCount =0;
 class GameScene extends Phaser.Scene {
@@ -35,13 +41,17 @@ class GameScene extends Phaser.Scene {
         this.load.image('smallPlatform','src/GameScene/grassfloor.png');
         this.load.image('tinyPlatform','src/GameScene/tinyground.png');
         this.load.spritesheet('slime', '/src/GameScene/spritesheet.png',
-             { frameWidth: 317, frameHeight: 254 });
+            { frameWidth: 317, frameHeight: 254 });
         this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
         this.load.image('star','src/GameScene/kindpng_3039539.png');
         this.load.image('map','src/GameScene/map.png')
         this.load.spritesheet('mon', 'src/GameScene/Female.png',
-             { frameWidth: 32 , frameHeight: 32 });
+            { frameWidth: 32 , frameHeight: 32 });
         this.load.image('bullet','src/GameScene/kindpng_1797062.png');
+        this.load.spritesheet('mon1', 'src/GameScene/running.png',
+            {frameWidth: 200,frameHeight: 200});
+        this.load.spritesheet('mon2', 'src/GameScene/kawaiiGirl.png',
+            {frameWidth: 32, frameHeight: 32});
     }
 
     create() {
@@ -97,9 +107,13 @@ class GameScene extends Phaser.Scene {
 
 
          //================================================================enemy========================================================================
+        //  monster.create.physics.sprite(1200, 700, 'mon').setScale(4);
+        //  monster.create.physics.sprite(1900, 700, 'mon2');
          monster = this.physics.add.sprite(1200,700,'mon').setScale(4);
-         this.physics.add.collider(monster);
-         monster.setGravityY(200);
+         monster1 = this.physics.add.sprite(5200,700,'mon1').setScale(0.8);
+         monster2 = this.physics.add.sprite(9200,700,'mon2').setScale(4);
+         this.physics.add.collider(monster,monster1,monster2);
+         
          this.anims.create({
             key: 'monLeft',
             frames : this.anims.generateFrameNumbers('mon',{
@@ -118,8 +132,40 @@ class GameScene extends Phaser.Scene {
             duration: 1000,
             repeat: -1
          })
+         this.anims.create({
+            key: 'mon1Left',
+            frames : this.anims.generateFrameNumbers('mon1',{
+                start: 0,
+                end: 7
+            }),
+            duration: 200,
+            repeat: -1
+         })
+         this.anims.create({
+            key: 'mon2Left',
+            frames : this.anims.generateFrameNumbers('mon2',{
+                start: 0,
+                end: 3
+            }),
+            duration: 200,
+            repeat: -1
+         })
+         this.anims.create({
+            key: 'mon2Right',
+            frames : this.anims.generateFrameNumbers('mon',{
+                start: 5,
+                end: 7
+            }),
+            duration: 1000,
+            repeat: -1
+         })
+
          this.physics.add.collider(monster, platforms);
+         this.physics.add.collider(monster1, platforms);
+         this.physics.add.collider(monster2, platforms);
          this.physics.add.overlap(monster, slime,this.enemyKiller);
+         this.physics.add.overlap(monster1, slime,this.enemyKiller1);
+         this.physics.add.overlap(monster2, slime,this.enemyKiller2);
         //  this.physics.add.collider(monster, slime);this.enemyKiller
          //this.physics.add.overlap(monster, slime, this.damage,null,this);
         
@@ -202,7 +248,38 @@ class GameScene extends Phaser.Scene {
             loop: true
             })
             this.physics.add.collider(slime, bulletGroup, this.damage);
-            
+
+        bulletGroup1 = this.physics.add.group()
+        event1 = this.time.addEvent({
+            delay: 1000,
+            callback: function() {
+                bullet = this.physics.add.image(monster1.x, monster1.y,'bullet')
+                bullet.setScale(0.7)
+                bullet.setDepth(0.9)
+                bulletGroup.add(bullet)
+                bulletGroup.setVelocityY(50)
+                bulletGroup.setVelocityX(-1080)
+            },
+            callbackScope: this,
+            loop: true
+            })
+            this.physics.add.collider(slime, bulletGroup1, this.damage);
+
+        bulletGroup2 = this.physics.add.group()
+        event2 = this.time.addEvent({
+            delay: 1000,
+            callback: function() {
+                bullet = this.physics.add.image(monster2.x, monster2.y,'bullet')
+                bullet.setScale(0.7)
+                bullet.setDepth(0.9)
+                bulletGroup.add(bullet)
+                bulletGroup.setVelocityY(50)
+                bulletGroup.setVelocityX(-1080)
+            },
+            callbackScope: this,
+            loop: true
+            })
+            this.physics.add.collider(slime, bulletGroup2, this.damage);
         }
 
     update(delta, time) {
@@ -246,11 +323,11 @@ class GameScene extends Phaser.Scene {
         // }else if (monster.position.x < slime.position.x ){
         //     monster.setVelocityX(20)
         //     monster.anims.play('monRight', true);
-        if(hp<=0){
+        if(hp <=0 ){
             this.scene.start("GameOver")
             hp =3;
         }
-        if(starCount==25){
+        if(starCount == 25){
             this.scene.start("win");
             hp=3;
             starCount=0;
@@ -259,6 +336,8 @@ class GameScene extends Phaser.Scene {
        {
             this.enemyFollows();
             monster.anims.play('monLeft', true);
+            monster1.anims.play('mon1Left', true);
+            monster2.anims.play('mon2Left', true);
         }
     }//endUpdate
 
@@ -280,19 +359,31 @@ class GameScene extends Phaser.Scene {
         starCount += 1;
         starDisplay.setText('Star: '+starCount+'/25');
     }
-        // damage(slime,bullet)
-        // {
-        //     hp -= 1;
-        //     heartDisplay.setText('hp: '+ hp);
-        //     bullet.destroy();
-        // }
+    damage(slime,bullet)
+    {
+        hp -= 1;
+        heartDisplay.setText('hp: '+ hp);
+        bullet.destroy();
+    }
     enemyKiller(monster,slime)
     {
         event.destroy();
-        monster.setVisible(false);
+        // monster.setVisible(false);
+    }
+    enemyKiller1(monster1,slime)
+    {
+        event1.destroy();
+        // monster1.setVisible(false);
+    }
+    enemyKiller2(monster2,slime)
+    {
+        event2.destroy();
+        // monster2.setVisible(false);
     }
     enemyFollows () {
         this.physics.moveToObject(monster,slime,100);
+        this.physics.moveToObject(monster1,slime,100);
+        this.physics.moveToObject(monster2,slime,100);
     }
 }
 export default GameScene;
