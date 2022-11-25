@@ -37,7 +37,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('heart','src/GameScene/PikPng.com_cute-heart-png_653468.png');
         this.load.image('star','src/GameScene/kindpng_3039539.png');
         this.load.image('map','src/GameScene/map.png')
-        this.load.spritesheet('mon', 'src/GameScene/Female 16-2.png',
+        this.load.spritesheet('mon', 'src/GameScene/Female.png',
              { frameWidth: 32 , frameHeight: 32 });
         this.load.image('bullet','src/GameScene/bullet.png');
     }
@@ -63,8 +63,8 @@ class GameScene extends Phaser.Scene {
         this.anims.create({
             key: 'slimeLeft',
             frames: this.anims.generateFrameNumbers('slime', {
-                start: 5,
-                end: 8
+                start: 3,
+                end: 5
             }),
             duration: 1000,
             repeat: -1
@@ -73,16 +73,46 @@ class GameScene extends Phaser.Scene {
             key: 'slimeRight',
              frames: this.anims.generateFrameNumbers('slime', {
                  start: 0,
-                 end: 3
+                 end: 2
              }),
              duration: 1000,
              repeat: -1
          })
 
+
+
+
+         //================================================================enemy========================================================================
+         monster = this.physics.add.sprite(1200,700,'mon').setScale(4);
+         this.physics.add.collider(monster);
+         this.anims.create({
+            key: 'monLeft',
+            frames : this.anims.generateFrameNumbers('mon',{
+                start: 3,
+                end: 5
+            }),
+            duration: 1000,
+            repeat: -1
+         })
+         this.anims.create({
+            key: 'monRight',
+            frames : this.anims.generateFrameNumbers('mon',{
+                start: 6,
+                end: 8
+            }),
+            duration: 1000,
+            repeat: -1
+         })
+         this.physics.add.collider(monster, platforms);
+         this.physics.add.collider(monster, slime);
+         this.physics.add.overlap(monster, slime, this.damage);
+         
+
+
          //========input========
          keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
          keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
+         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
          //========settings========
          slime.setCollideWorldBounds(true);
@@ -133,7 +163,7 @@ class GameScene extends Phaser.Scene {
 
         //this.cameras.main.setZoom(2);
 
-        //========Monster========
+        // this.physics.moveToObject(this.monster, this.slime, 100);
        
 
         //========weapon========
@@ -159,6 +189,9 @@ class GameScene extends Phaser.Scene {
     update(delta, time) {
         //background.tilePositionX += 2;
         //platforms.tilePositionX += 2;
+        // this.enemyFollows();
+        // this.physics.moveToObject(this.monster, this.slime, 100);
+
         if (keyA.isDown) {
             slime.setVelocityX(-250)
             slime.anims.play('slimeLeft', true); // waiting for spritesheet
@@ -178,8 +211,29 @@ class GameScene extends Phaser.Scene {
 
         heartDisplay.setScrollFactor(0);
         atkDisplay.setScrollFactor(0);
+
+        if (monster.x - slime.x > slime.x){
+            monster.setVelocityX(-100);
+            monster.anims.play('monLeft', true);
+            //monster.anims.play('monRight', false);
+        } else if (monster.x < slime.x){
+            monster.setVelocityX(100);
+            monster.anims.play('monRight', true);
+            //monster.anims.play('monLeft', false);
+        }else {
+            monster.setVelocityX(0);
+            monster.anims.play('monRight', false);
+            monster.anims.play('monLeft', false);
+        }
+        // }else if (monster.position.x < slime.position.x ){
+        //     monster.setVelocityX(20)
+        //     monster.anims.play('monRight', true);
         
-    }
+
+    }//endUpdate
+
+
+
     collectHeart (slime, heart)
     {
         heart.disableBody(true, true);
@@ -192,6 +246,11 @@ class GameScene extends Phaser.Scene {
         atk +=5;
         atkDisplay.setText('atk: '+atk+'%');
     }
-    
+    damage(slime)
+    {
+        hp -= 1;
+        heartDisplay.setText('hp: '+ hp);
+        duration: 1000;
+    }
 }
 export default GameScene;
