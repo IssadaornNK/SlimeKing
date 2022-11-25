@@ -10,6 +10,7 @@ let keyD;
 let star;
 let storySound;
 let monster;
+let v1,v2,v3,v4,v6,v7,v8;
 class story extends Phaser.Scene {
     constructor(test) {
         super({
@@ -34,12 +35,26 @@ class story extends Phaser.Scene {
         this.load.audio('storySound','src/GameScene/very-lush-and-swag-loop-74140.mp3')
         this.load.spritesheet('mon', 'src/GameScene/Female.png',
             { frameWidth: 32 , frameHeight: 32 });
+        this.load.audio('v1','src/GameScene/1.mp3')
+        this.load.audio('v2','src/GameScene/2.mp3')
+        this.load.audio('v3','src/GameScene/3.mp3')
+        this.load.audio('v4','src/GameScene/4.mp3')
+        this.load.audio('v6','src/GameScene/6.mp3')
+        this.load.audio('v7','src/GameScene/7.mp3')
     }
 
     create() {
         background = this.add.image(960,540,'backg');
         storySound = this.sound.add('storySound',{loop:true});
         storySound.play();
+        v1 = this.sound.add('v1');
+        v2 = this.sound.add('v2');
+        v3 = this.sound.add('v3');
+        v4 = this.sound.add('v4');
+        v6 = this.sound.add('v6');
+        v7 = this.sound.add('v7');
+        v8 = this.sound.add('v8');
+
         //slime
         slime = this.physics.add.sprite(1400, 800, 'slime').setScale(0.5);
         this.physics.add.collider(slime);
@@ -64,8 +79,14 @@ class story extends Phaser.Scene {
         this.input.on("pointerdown",()=>{
             if(i<=8){
                 next = this.add.image(350,880,'t'+i);
-                i++;
+                if(i==1){
+                    v1.play();
+                }
+                if(i==2){
+                    v2.play();
+                }
                 if(i==3){
+                    v3.play();
                     monster = this.physics.add.sprite(1100,700,'mon').setScale(4);
                     this.anims.create({
                         key: 'monLeft',
@@ -91,6 +112,7 @@ class story extends Phaser.Scene {
                 if(i==6){
                     star = this.add.sprite(1750,970,'star');
                 }
+                i++;
             }
             else{
                 this.scene.start("GameScene");
