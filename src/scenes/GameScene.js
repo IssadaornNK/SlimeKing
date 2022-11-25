@@ -120,7 +120,7 @@ class GameScene extends Phaser.Scene {
          this.physics.add.overlap(monster, slime, this.enemyKiller);
         //  this.physics.add.collider(monster, slime);
          //this.physics.add.overlap(monster, slime, this.damage,null,this);
-         //monster.startFollow(slime,true,0.1,0.1);
+        
 
 
          //========input========
@@ -250,6 +250,10 @@ class GameScene extends Phaser.Scene {
             hp =3;
         }
 
+       {
+            this.enemyFollows();
+        }
+
     }//endUpdate
 
 
@@ -281,6 +285,9 @@ class GameScene extends Phaser.Scene {
     enemyKiller(monster,slime)
     {
         event.destroy();
+    }
+    enemyFollows () {
+        this.physics.moveToObject(monster,slime, 100);
     }
 }
 export default GameScene;
