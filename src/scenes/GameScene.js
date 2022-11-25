@@ -39,7 +39,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('map','src/GameScene/map.png')
         this.load.spritesheet('mon', 'src/GameScene/Female.png',
              { frameWidth: 32 , frameHeight: 32 });
-        this.load.image('bullet','src/GameScene/bullet.png');
+        this.load.image('bullet','src/GameScene/kindpng_1797062.png');
     }
 
     create() {
@@ -109,7 +109,7 @@ class GameScene extends Phaser.Scene {
          this.physics.add.collider(monster, platforms);
         //  this.physics.add.collider(monster, slime);
          //this.physics.add.overlap(monster, slime, this.damage,null,this);
-         
+         //monster.startFollow(slime,true,0.1,0.1);
 
 
          //========input========
@@ -127,8 +127,8 @@ class GameScene extends Phaser.Scene {
          //========heart========
          hearts = this.physics.add.group({
             key: 'heart',
-            repeat: 7,
-            setXY: { x: 2500, y: 0, stepX: 4000 }
+            repeat: 20,
+            setXY: { x: 2500, y: 0, stepX: 700 }
         });
 
         hearts.children.iterate(function (child) {
