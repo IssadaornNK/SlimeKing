@@ -15,6 +15,9 @@ let atk =10;
 let atkDisplay;
 let monster;
 let mon;
+let bullet;
+let event;
+let bulletGroup;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -36,6 +39,7 @@ class GameScene extends Phaser.Scene {
         this.load.image('map','src/GameScene/map.png')
         this.load.spritesheet('mon', 'src/GameScene/Female 16-2.png',
              { frameWidth: 32 , frameHeight: 32 });
+        this.load.image('bullet','src/GameScene/bullet.png');
     }
 
     create() {
@@ -132,14 +136,29 @@ class GameScene extends Phaser.Scene {
         //========Monster========
        
 
-        //======== ========
+        //========weapon========
+        //fireButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACEBAR);
+        bulletGroup = this.physics.add.group()
+        event = this.time.addEvent({
+            delay: 300,
+            callback: function() {
+                bullet = this.physics.add.image(slime.x, slime.y,'bullet')
+                bullet.setScale(0.7)
+                bullet.setDepth(0.9)
+                bulletGroup.add(bullet)
+                bulletGroup.setVelocityY(-50)
+                bulletGroup.setVelocityX(1080)
+                
+            },
+            callbackScope: this,
+            loop: true
+        })
+        
     }
 
     update(delta, time) {
         //background.tilePositionX += 2;
         //platforms.tilePositionX += 2;
-        
-
         if (keyA.isDown) {
             slime.setVelocityX(-250)
             slime.anims.play('slimeLeft', true); // waiting for spritesheet
@@ -159,6 +178,7 @@ class GameScene extends Phaser.Scene {
 
         heartDisplay.setScrollFactor(0);
         atkDisplay.setScrollFactor(0);
+        
     }
     collectHeart (slime, heart)
     {
@@ -172,5 +192,6 @@ class GameScene extends Phaser.Scene {
         atk +=5;
         atkDisplay.setText('atk: '+atk+'%');
     }
+    
 }
 export default GameScene;
