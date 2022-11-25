@@ -12,12 +12,13 @@ let heartDisplay;
 let cursors;
 let stars;
 let atk =10;
-let atkDisplay;
+//let atkDisplay;
 let monster;
 let mon;
 let bullet;
 let event;
 let bulletGroup;
+let hr;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -58,6 +59,16 @@ class GameScene extends Phaser.Scene {
         platforms.create(2500,700,'tinyPlatform');
         platforms.create(2870,920,'smallPlatform');
         platforms.create(2900,550,'tinyPlatform');
+        platforms.create(3500,350,'tinyPlatform');
+        platforms.create(4000,900,'platform');
+        platforms.create(4500,940,'platform');
+        platforms.create(6000,920,'smallPlatform');
+        platforms.create(6700,940,'tinyPlatform');
+        platforms.create(7500,920,'smallPlatform');
+        platforms.create(8040,920,'smallPlatform');
+        platforms.create(8040,860,'smallPlatform');
+        platforms.create(8580,920,'smallPlatform');
+        platforms.create(9700,750,'tinyPlatform');
         
 
         //========slime========
@@ -84,7 +95,6 @@ class GameScene extends Phaser.Scene {
 
 
 
-
          //================================================================enemy========================================================================
          monster = this.physics.add.sprite(1200,700,'mon').setScale(4);
          this.physics.add.collider(monster);
@@ -107,6 +117,7 @@ class GameScene extends Phaser.Scene {
             repeat: -1
          })
          this.physics.add.collider(monster, platforms);
+         this.physics.add.overlap(monster, slime, this.enemyKiller);
         //  this.physics.add.collider(monster, slime);
          //this.physics.add.overlap(monster, slime, this.damage,null,this);
          //monster.startFollow(slime,true,0.1,0.1);
@@ -128,15 +139,17 @@ class GameScene extends Phaser.Scene {
          hearts = this.physics.add.group({
             key: 'heart',
             repeat: 20,
-            setXY: { x: 2500, y: 0, stepX: 700 }
+            setXY: { x: 2700, y: 0, stepX: 1250 }
         });
-
+        hr = this.physics.add.staticGroup();
+        hr.create(3500,260,'heart').setScale(2);
         hearts.children.iterate(function (child) {
     
             child.setBounceY(Phaser.Math.FloatBetween(0.2, 0.4));
     
         });
         this.physics.add.collider(hearts, platforms);
+        this.physics.add.overlap(slime, hr, this.extraHeart);
         this.physics.add.overlap(slime, hearts, this.collectHeart);
 
         heartDisplay = this.add.text(16, 16, 'hp: 3', { fontSize: '60px', fill: '#000' });
@@ -157,7 +170,8 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(stars, platforms);
         this.physics.add.overlap(slime, stars, this.collectStar);
 
-        atkDisplay = this.add.text(16, 100, 'atk: 10%', { fontSize: '60px', fill: '#000' });
+        //atkDisplay = this.add.text(16, 100, 'atk: 10%', { fontSize: '60px', fill: '#000' });
+
         //========camera========
         this.cameras.main.setBounds(0, 0, background.displayWidth,background.displayHeight);
         this.physics.world.setBounds(0, 0, 1920*6, 1080*6);
@@ -209,12 +223,12 @@ class GameScene extends Phaser.Scene {
             slime.anims.play('slimeRight', false); // waiting for spritesheet
         }
         if(keyW.isDown&&slime.body.touching.down) {
-            slime.setVelocityY(-590);
+            slime.setVelocityY(-550);
             slime.anims.play('slimeleft', true);
         }
 
         heartDisplay.setScrollFactor(0);
-        atkDisplay.setScrollFactor(0);
+        //atkDisplay.setScrollFactor(0);
 
         if (monster.x > slime.x){
             monster.setVelocityX(-100);
@@ -243,17 +257,27 @@ class GameScene extends Phaser.Scene {
         hp +=1;
         heartDisplay.setText('hp: ' + hp);
     }
+    extraHeart(slime,hr)
+    {
+        hr.disableBody(true,true);
+        hp+=5;
+        heartDisplay.setText('hp: ' + hp);
+    }
     collectStar(slime,star)
     {
         star.disableBody(true, true);
-        atk +=5;
-        atkDisplay.setText('atk: '+atk+'%');
+        hp += 0.5;
+        heartDisplay.setText('hp: '+hp);
     }
     damage(slime,bullet)
     {
         hp -= 1;
         heartDisplay.setText('hp: '+ hp);
         bullet.destroy();
+    }
+    enemyKiller(monster,slime)
+    {
+        event.destroy();
     }
 }
 export default GameScene;
