@@ -87,12 +87,13 @@ class GameScene extends Phaser.Scene {
         platforms.create(4000,900,'platform');
         platforms.create(4500,940,'platform');
         platforms.create(6000,920,'smallPlatform');
-        platforms.create(6700,940,'tinyPlatform');
+        platforms.create(6700,960,'tinyPlatform');
         platforms.create(7500,920,'smallPlatform');
         platforms.create(8040,920,'smallPlatform');
         platforms.create(8040,860,'smallPlatform');
         platforms.create(8580,920,'smallPlatform');
-        platforms.create(9700,750,'tinyPlatform');
+        platforms.create(9700,700,'tinyPlatform');
+        platforms.create(9080,920,'smallPlatform');
         
 
         //========slime========
