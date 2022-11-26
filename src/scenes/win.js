@@ -19,7 +19,16 @@ class win extends Phaser.Scene {
     create() {
         background = this.add.image(960,540,'back')
         victory = this.sound.add('victory',{loop:true});
-        victory.play()
+        var victoryConfig = {
+            mute: false,
+            volume: 0.3,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        victory.play(victoryConfig)
         Button = this.add.image(300,850,'restart').setScale(0.5)
         //this.add.image(950,360,'slimelogo').setScale(2)
         //theOtherScene = this.scene.get('GameOver');

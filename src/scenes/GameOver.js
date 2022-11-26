@@ -19,7 +19,16 @@ class GameOver extends Phaser.Scene {
     create() {
         bgOver = this.add.image(960,540,'gameOver')
         over = this.sound.add('over');
-        over.play();
+        var overConfig = {
+            mute: false,
+            volume: 0.3,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        over.play(overConfig);
         playButton = this.add.image(960,530,'restart').setScale(0.5)
         //this.add.image(950,360,'slimelogo').setScale(2)
         //theOtherScene = this.scene.get('GameOver');

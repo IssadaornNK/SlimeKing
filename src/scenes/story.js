@@ -47,7 +47,16 @@ class story extends Phaser.Scene {
     create() {
         background = this.add.image(960,540,'backg');
         storySound = this.sound.add('storySound',{loop:true},{volume: 0.001});
-        storySound.play();
+        var storySoundConfig = {
+            mute: false,
+            volume: 0.3,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        storySound.play(storySoundConfig);
         v1 = this.sound.add('v1');
         v2 = this.sound.add('v2');
         v3 = this.sound.add('v3');
@@ -120,7 +129,7 @@ class story extends Phaser.Scene {
                 if(i==7){
                     v7.play();
                 }
-                if(i==8){
+                else if(i==8){
                     v8.play();
                 }
                 i++;

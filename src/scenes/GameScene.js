@@ -62,7 +62,16 @@ class GameScene extends Phaser.Scene {
         //background = this.add.image(1920+960,540,'scene2');
         
         music = this.sound.add('music', { loop: true })
-        music.play();
+        var musicConfig = {
+            mute: false,
+            volume: 0.2,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        music.play(musicConfig);
 
         //========platform=======
         platforms = this.physics.add.staticGroup();

@@ -23,10 +23,10 @@ const config = {
     },
     scene: [
         MainMenu,
-        GameScene,
-        GameOver,
-        win,
         story,
+        GameScene,
+        win,
+        GameOver,
         
     ],
     
