@@ -41,6 +41,7 @@ class story extends Phaser.Scene {
         this.load.audio('v4','src/GameScene/4.mp3')
         this.load.audio('v6','src/GameScene/6.mp3')
         this.load.audio('v7','src/GameScene/7.mp3')
+        this.load.audio('v8','src/GameScene/8.mp3')
     }
 
     create() {
@@ -62,7 +63,7 @@ class story extends Phaser.Scene {
         v4 = this.sound.add('v4');
         v6 = this.sound.add('v6');
         v7 = this.sound.add('v7');
-        //v8 = this.sound.add('v8');
+        v8 = this.sound.add('v8');
 
         //slime
         slime = this.physics.add.sprite(1400, 800, 'slime').setScale(0.5);
@@ -128,13 +129,12 @@ class story extends Phaser.Scene {
                 if(i==7){
                     v7.play();
                 }
-                // else if(i==8){
-                //     v8.play();
-                // }
+                else if(i==8){
+                    v8.play();
+                }
                 i++;
             }
             else{
-                // v8.play();
                 this.scene.start("GameScene");
                 storySound.stop();
             }
