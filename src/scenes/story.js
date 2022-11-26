@@ -57,13 +57,13 @@ class story extends Phaser.Scene {
             delay: 0
         }
         storySound.play(storySoundConfig);
-        v1 = this.sound.add('v1');
-        v2 = this.sound.add('v2');
-        v3 = this.sound.add('v3');
-        v4 = this.sound.add('v4');
-        v6 = this.sound.add('v6');
-        v7 = this.sound.add('v7');
-        v8 = this.sound.add('v8');
+        v1 = this.sound.add('v1',{volume: 3});
+        v2 = this.sound.add('v2',{volume: 3});
+        v3 = this.sound.add('v3',{volume: 3});
+        v4 = this.sound.add('v4',{volume: 3});
+        v6 = this.sound.add('v6',{volume: 3});
+        v7 = this.sound.add('v7',{volume: 3});
+        v8 = this.sound.add('v8',{volume: 3});
 
         //slime
         slime = this.physics.add.sprite(1400, 800, 'slime').setScale(0.5);
