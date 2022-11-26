@@ -41,6 +41,7 @@ class story extends Phaser.Scene {
         this.load.audio('v4','src/GameScene/4.mp3')
         this.load.audio('v6','src/GameScene/6.mp3')
         this.load.audio('v7','src/GameScene/7.mp3')
+        this.load.audio('v8','src/GameScene/8.mp3')
     }
 
     create() {
