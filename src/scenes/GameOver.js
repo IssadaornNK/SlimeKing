@@ -11,13 +11,14 @@ class GameOver extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('gameOver','src/GameScene/GameOverButWeeb.png');
-        this.load.image('restart','src/GameScene/pngkey.com-replay-png-2243342.png');
-        this.load.audio('over','src/GameScene/videogame-death-sound-43894.mp3');
+        this.load.image('gameOver', 'src/GameScene/onesanending.png');
+        this.load.image('restart', 'src/GameScene/pngkey.com-replay-png-2243342.png');
+        this.load.audio('over', 'src/GameScene/videogame-death-sound-43894.mp3');
     }
 
     create() {
-        bgOver = this.add.image(960,540,'gameOver')
+        bgOver = this.add.image(960, 540, 'gameOver')
+        this.input.setDefaultCursor('url(src/GameScene/sym749.cur), pointer');
         over = this.sound.add('over');
         var overConfig = {
             mute: false,
@@ -25,15 +26,15 @@ class GameOver extends Phaser.Scene {
             rate: 1,
             detune: 0,
             seek: 0,
-            loop: true,
+            loop: false,
             delay: 0
         }
         over.play(overConfig);
-        playButton = this.add.image(960,530,'restart').setScale(0.5)
+        playButton = this.add.image(960, 530, 'restart').setScale(0.5)
         //this.add.image(950,360,'slimelogo').setScale(2)
         //theOtherScene = this.scene.get('GameOver');
         playButton.setInteractive()
-        playButton.on("pointerdown",()=>{
+        playButton.on("pointerdown", () => {
             this.scene.start("MainMenu")
         })
     }
