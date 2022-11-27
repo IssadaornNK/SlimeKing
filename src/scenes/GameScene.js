@@ -29,6 +29,7 @@ let start;
 let wink;
 let yay;
 let jump;
+let dmgSoumd;
 class GameScene extends Phaser.Scene {
     constructor(test) {
         super({
@@ -60,6 +61,7 @@ class GameScene extends Phaser.Scene {
         this.load.audio('jump','src/GameScene/cartoon-jump-6462.mp3');
         this.load.audio('yay','src/GameScene/yipee-45360.mp3');
         this.load.audio('wink','src/GameScene/sound-effect-twinklesparkle-115095.mp3');
+        this.load.audio('damageSound','src/GameScene/menu-button-89141.mp3')
         
     }
 
@@ -86,6 +88,7 @@ class GameScene extends Phaser.Scene {
         yay = this.sound.add('yay')
         wink = this.sound.add('wink')
         jump = this.sound.add('jump')
+        dmgSoumd = this.sound.add('damageSound')
 
         //========platform=======
         platforms = this.physics.add.staticGroup();
@@ -400,6 +403,7 @@ class GameScene extends Phaser.Scene {
         hp -= 1;
         heartDisplay.setText('hp: ' + hp);
         bullet.destroy();
+        dmgSoumd.play()
     }
     enemyKiller(monster, slime) {
         event.destroy();
