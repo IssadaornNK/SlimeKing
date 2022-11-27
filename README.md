@@ -1,1 +1,1 @@
-# G10-Slimeking
+Doki doki with slime
